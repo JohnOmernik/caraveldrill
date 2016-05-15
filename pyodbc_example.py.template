@@ -1,0 +1,59 @@
+#!/usr/bin/python
+
+import pyodbc
+import pandas as pd
+import re
+import urllib
+
+MY_ZK_DSN = """
+Driver                     = /opt/mapr/drillodbc/lib/64/libmaprdrillodbc64.so
+ConnectionType             = Zookeeper
+ZKQuorum                   = zkhost1:5181,zkhost2:5181,zkhost3:5181
+ZKClusterID                = drillbits
+Catalog                    = DRILL
+AuthenticationType         = Basic Authentication
+AdvancedProperties         = CastAnyToVarchar=true
+HandshakeTimeout           = 5
+QueryTimeout               = 180
+TimestampTZDisplayTimezone = utc
+ExcludedSchemas            = sys,INFORMATION_SCHEMA
+NumberOfPrefetchBuffers    = 5
+UID                        = someuser
+PWD                        = somepass
+"""
+
+
+
+MY_DIRECT_DSN = """
+Driver                     = /opt/mapr/drillodbc/lib/64/libmaprdrillodbc64.so
+ConnectionType             = Direct
+Host                       = drillbit1.local
+Port                       = 20001
+Catalog                    = DRILL
+AuthenticationType         = Basic Authentication
+AdvancedProperties         = CastAnyToVarchar=true
+HandshakeTimeout           = 5
+QueryTimeout               = 180
+TimestampTZDisplayTimezone = utc
+ExcludedSchemas            = sys,INFORMATION_SCHEMA
+NumberOfPrefetchBuffers    = 5
+UID                        = someuser
+PWD                        = somepass
+"""
+# Pick which approach you want here 
+MY_DSN_SOURCE = MY_DIRECT_DSN
+
+MY_DSN = ";".join(
+    [re.sub(r'(\t+|\s+)=\s+', '=', i) for i in MY_DSN_SOURCE.split('\n') if i != '']
+)
+uq = urllib.quote_plus(MY_DSN)
+
+print "This could be used for Caravel Datasources - It's properly encoded for Caravel and the WebUI"
+
+print uq
+print ""
+print ""
+conn = pyodbc.connect(MY_DSN,autocommit=True)
+cursor = conn.cursor()
+cursor.execute("show schemas")
+print cursor.fetchall()
