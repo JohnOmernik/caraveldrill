@@ -4,11 +4,8 @@
 # Name the image for use in this project
 DOCKERIMG="zeta/caravel"
 
-cd dockerbuild
+docker build -t $DOCKERIMG .
 
-sudo docker build -t $DOCKERIMG .
-
-cd ..
 
 
 
