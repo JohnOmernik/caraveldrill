@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECTDIR="/mapr/brewpot/apps/prod/caravel/caraveldrill"
+PROJECTDIR=$(pwd)/mounted
 
 DOCKERIMG="zeta/caravel"
 
@@ -27,6 +27,7 @@ echo "The First time you should run the commands (from within the docker contain
 echo ""
 echo "This is not a production ready container. It is designed to work with the configuration items with caravel and with pyodbc on a path to get Apache Drill working with Caravel"
 echo ""
+echo "Did you already run initial.sh? Run only caravel: caravel runserver -d"
 
 
-sudo docker run -it --rm --net=host -e="PYTHONPATH=/app/caravel/caravel_config.py:$PYTHONPATH" -v=${PROJECTDIR}/working:/app/caravel:rw -v=${PROJECTDIR}/cache:/app/cache:rw ${DOCKERIMG} /bin/bash
+docker run -it --rm -p 8088:8088 -e="PYTHONPATH=/app/caravel/caravel_config.py:$PYTHONPATH" -v=${PROJECTDIR}/working:/app/caravel:rw -v=${PROJECTDIR}/cache:/app/cache:rw ${DOCKERIMG} /bin/bash
