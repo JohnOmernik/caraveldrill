@@ -14,6 +14,8 @@ ENV LD_LIBRARY_PATH=/usr/local/lib:/opt/mapr/drillodbc/lib/64
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN sed -i "s/UTF-32/UTF-16/" /opt/mapr/drillodbc/Setup/mapr.drillodbc.ini
+
 WORKDIR /app/caravel
 
 CMD ["python -v"]
