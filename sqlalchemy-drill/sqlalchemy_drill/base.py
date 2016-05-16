@@ -91,6 +91,18 @@ class DrillExecutionContext(default.DefaultExecutionContext):
 
 
 class DrillCompiler(compiler.SQLCompiler):
+## Added On Purpose
+    def default_from(self):
+        """Called when a ``SELECT`` statement has no froms,
+        and no ``FROM`` clause is to be appended.
+       Drill uses FROM values(1)
+        """
+
+        return " FROM (values(1))"
+
+## Added as part of the original package (we may eventually remove)
+
+
     extract_map = compiler.SQLCompiler.extract_map.copy()
     extract_map.update({
             'month': 'm',
@@ -254,8 +266,7 @@ class DrillDialect(default.DefaultDialect):
 
     @reflection.cache
     def get_table_names(self, connection, schema=None, **kw):
-        result = connection.execute("select name from msysobjects where "
-                "type=1 and name not like 'MSys%'")
+        result = connection.execute("show tables in dfs.root")
         table_names = [r[0] for r in result]
         return table_names
 
