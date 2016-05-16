@@ -22,5 +22,11 @@ The goal is create an easy environment with all dependencies to work on getting 
 * If the file pyodbc_example.py exists, the run.sh will copy it to /app/caravel in the container for testing. 
 * This is just a basic demonstration that pyodbc, in the container is working. 
 
+### SQL Alchemy Drill Dialect Notes
+* We do not install the SQL Alchemy dialect in the Docker container (Because it't not complete or working)
+* To run it, copy into the container (I use the mounted application location) and run "python setup.py install"
+* This is NOT WORKING (hence why it is not in the container) It's a copy of the Access dialect, that is slowly morphing into a drill dialect.
+  * It's initially here to allow a connect. Basic things are being updated slowly as time goes on, it will allow a "test connection" but that's about it. 
+
 
 
