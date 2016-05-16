@@ -4,9 +4,9 @@ The goal is create an easy environment with all dependencies to work on getting 
 
 ## Steps to Use Image
 * Edit the builddocker.sh and run.sh files and edit the DOCKERIMG and PROJECTDIR variables to match your project (DOCKERIMG should match in both files)
-* Run dockerbuild.sh - This builds the docker container
-* Run run.sh  This drops you into /app/caravel inthe container. If this is the first time you've run things, run initial.sh to config things. 
-* Caravel will be running now!
+* Run builddocker.sh - This builds the docker container
+* Run run.sh  This drops you into /app/caravel in the container. If this is the first time you've run things, run initial.sh to config things. 
+* Caravel will be running now! If you want to reuse config, run ```caravel runserver -d```
 
 ### Some Caravel Notes
 * We use host networking to make this easier. If you have something running on port 8088 on your docker host, it will conflict. 

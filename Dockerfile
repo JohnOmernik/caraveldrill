@@ -2,6 +2,8 @@ FROM ubuntu
 
 RUN apt-get update && apt-get install -y build-essential libssl-dev libffi-dev python-dev python-pip rpm2cpio cpio unixodbc-dev unixodbc-bin wget
 
+RUN pip install --upgrade pip
+
 RUN pip install pyodbc
 
 RUN pip install caravel
