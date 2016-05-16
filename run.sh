@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECTDIR=$(pwd)/mounted
+PROJECTDIR=/mapr/brewpot/apps/prod/caravel/caraveldrill
 
 DOCKERIMG="zeta/caravel"
 
