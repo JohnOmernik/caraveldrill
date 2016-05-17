@@ -8,9 +8,29 @@ import urllib
 MY_ZK_DSN = """
 Driver                     = /opt/mapr/drillodbc/lib/64/libmaprdrillodbc64.so
 ConnectionType             = Zookeeper
+ZKQuorum                   = zknode1:5181,zknode2:5181,zknode3:5181
+ZKClusterID                = /drill/drillbits
+Catalog                    = DRILL
+Schema                     = dfs.root
+AuthenticationType         = Basic Authentication
+AdvancedProperties         = CastAnyToVarchar=true
+HandshakeTimeout           = 5
+QueryTimeout               = 180
+TimestampTZDisplayTimezone = utc
+ExcludedSchemas            = sys,INFORMATION_SCHEMA
+NumberOfPrefetchBuffers    = 5
+UID                        = someuser
+PWD                        = somepass
+"""
+
+
+MY_ZK_DSN = """
+Driver                     = /opt/mapr/drillodbc/lib/64/libmaprdrillodbc64.so
+ConnectionType             = Zookeeper
 ZKQuorum                   = zkhost1:5181,zkhost2:5181,zkhost3:5181
 ZKClusterID                = drillbits
 Catalog                    = DRILL
+Schema                     = dfs.root
 AuthenticationType         = Basic Authentication
 AdvancedProperties         = CastAnyToVarchar=true
 HandshakeTimeout           = 5
@@ -40,20 +60,40 @@ NumberOfPrefetchBuffers    = 5
 UID                        = someuser
 PWD                        = somepass
 """
+
 # Pick which approach you want here 
-MY_DSN_SOURCE = MY_DIRECT_DSN
+MY_DSN_SOURCE = MY_ZK_DSN
 
 MY_DSN = ";".join(
     [re.sub(r'(\t+|\s+)=\s+', '=', i) for i in MY_DSN_SOURCE.split('\n') if i != '']
 )
 uq = urllib.quote_plus(MY_DSN)
 
-print("This could be used for Caravel Datasources - It's properly encoded for Caravel and the WebUI")
+#print "This could be used for Caravel Datasources - It's properly encoded for Caravel and the WebUI"
+print ""
+print MY_DSN
+print ""
+print ""
+print "Use this in caravel:"
+print ""
+print "drill+pyodbc:///%s" % MY_DSN
+print ""
+print ""
+extras = """{
+    "metadata_params": {},
+    "engine_params": {"connect_args": {"autocommit": 1}}
+}"""
 
-print(uq)
-print("")
-print("")
+print "Under extras, replace the json in the caravel setup with:"
+print extras
+print ""
+print ""
+print "Quoted:"
+print ""
+print uq
+print ""
+print ""
 conn = pyodbc.connect(MY_DSN,autocommit=True)
 cursor = conn.cursor()
-cursor.execute("show schemas")
-print(cursor.fetchall())
+
+

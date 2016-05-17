@@ -266,7 +266,7 @@ class DrillDialect(default.DefaultDialect):
 
     @reflection.cache
     def get_table_names(self, connection, schema=None, **kw):
-        result = connection.execute("show tables in dfs.root")
+        result = connection.execute("show tables")
         table_names = [r[0] for r in result]
         return table_names
 
