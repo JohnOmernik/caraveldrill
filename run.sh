@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PROJECTDIR=/mapr/brewpot/apps/prod/caravel/caraveldrill
+PROJECTDIR=${PROJECTDIR:-"$PWD/mounted"}
+DRILLDIALECT_PATH=${DRILLDIALECT_PATH:-"$PWD/../sqlalchemy-drill"}
 
 DOCKERIMG="zeta/caravel"
 
@@ -30,4 +31,4 @@ echo ""
 echo "Did you already run initial.sh? Run only caravel: caravel runserver -d"
 
 
-docker run -it --rm -p 8088:8088 -e="PYTHONPATH=/app/caravel/caravel_config.py:$PYTHONPATH" -v=${PROJECTDIR}/working:/app/caravel:rw -v=${PROJECTDIR}/cache:/app/cache:rw ${DOCKERIMG} /bin/bash
+docker run -it --rm -p 8088:8088 -e="PYTHONPATH=/app/caravel/caravel_config.py:/app/sqlalchemy-drill:$PYTHONPATH" -v=${DRILLDIALECT_PATH}:/app/sqlalchemy-drill -v=${PROJECTDIR}/working:/app/caravel:rw -v=${PROJECTDIR}/cache:/app/cache:rw ${DOCKERIMG} /bin/bash
