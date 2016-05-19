@@ -84,6 +84,8 @@ extras = """{
     "engine_params": {"connect_args": {"autocommit": 1}}
 }"""
 
+print "Note: Extras do not need to be updated. We are handling that in the Drill Dialect now. THis is left in for future rememberence"
+
 print "Under extras, replace the json in the caravel setup with:"
 print extras
 print ""

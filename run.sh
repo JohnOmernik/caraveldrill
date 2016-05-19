@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PROJECTDIR=${PROJECTDIR:-"$PWD/mounted"}
+PROJECTDIR=${PROJECTDIR:-"$PWD"}
+
 DRILLDIALECT_PATH=${DRILLDIALECT_PATH:-"$PWD/../sqlalchemy-drill"}
 
 DOCKERIMG="zeta/caravel"

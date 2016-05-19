@@ -24,4 +24,4 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:////app/caravel/caravel.db'
 # Flask-WTF flag for CSRF
 CSRF_ENABLED = True
 
-#DEBUG = 1 
+DEBUG = 1 
